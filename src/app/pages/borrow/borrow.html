@@ -1,0 +1,18 @@
+<app-navbar></app-navbar>
+
+<h2>Borrowed Books</h2>
+
+<div *ngIf="borrowedBooks.length > 0; else noData">
+  <div *ngFor="let item of borrowedBooks" class="card">
+    <p><strong>Borrow ID:</strong> {{ item.id }}</p>
+    <p><strong>Book ID:</strong> {{ item.bookId }}</p>
+    <p><strong>Status:</strong> {{ item.returned ? 'Returned' : 'Not Returned' }}</p>
+    <button *ngIf="!item.returned" (click)="returnBook(item.id)">
+      Return
+    </button>
+  </div>
+</div>
+
+<ng-template #noData>
+  <p>No borrowed books found.</p>
+</ng-template>
