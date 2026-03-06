@@ -8,36 +8,33 @@ import { CommonModule } from '@angular/common';
   selector: 'app-login',
   standalone: true,
   imports: [CommonModule, FormsModule],
-  templateUrl: './login.html'
+  templateUrl: './login.html',
+  styleUrls: ['./login.css']
 })
 export class LoginComponent {
 
-  email: string = '';
-  password: string = '';
-  errorMessage: string = '';   
+  email = '';
+  password = '';
 
-  constructor(
-    private http: HttpClient,
-    private router: Router
-  ) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   login() {
 
-    const credentials = {
+    this.http.post<any>('http://localhost:3000/auth/login', {
       email: this.email,
       password: this.password
-    };
+    }).subscribe(res => {
 
-    this.http.post<any>('http://localhost:3000/auth/login', credentials)
-      .subscribe({
-        next: (res) => {
+      const role = (res.role || '').toLowerCase();
 
-          localStorage.setItem('token', res.access_token);
-          this.router.navigate(['/dashboard']);
-        },
-        error: (err: any) => {
-          this.errorMessage = 'Invalid credentials';  
-        }
+      localStorage.setItem('role', role);
+      localStorage.setItem('userId', res.id);
+
+      this.router.navigate(['/dashboard']).then(() => {
+        window.location.reload();
       });
+
+    });
+
   }
 }

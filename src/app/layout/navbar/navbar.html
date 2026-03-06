@@ -1,13 +1,17 @@
-<nav style="background:#1976d2; padding:10px; color:white; display:flex; justify-content:space-between;">
-  
-  <div>
-    <a routerLink="/dashboard" style="color:white; margin-right:15px;">Dashboard</a>
-    <a routerLink="/books" style="color:white; margin-right:15px;">Books</a>
-    <a routerLink="/borrow" style="color:white;">Borrowed Books</a>
-  </div>
+<nav class="navbar">
 
-  <button (click)="logout()" style="background:white; color:#1976d2;">
-    Logout
-  </button>
+  <h2>LMS</h2>
+
+  <div class="menu">
+
+    <a routerLink="/dashboard">Dashboard</a>
+
+    <a routerLink="/books">Books</a>
+
+    <a *ngIf="role === 'user'" routerLink="/borrow">Borrowers</a>
+
+    <button (click)="logout()">Logout</button>
+
+  </div>
 
 </nav>

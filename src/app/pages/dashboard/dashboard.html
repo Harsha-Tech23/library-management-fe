@@ -1,7 +1,25 @@
-<h2>Welcome to Library Dashboard</h2>
+<div class="layout">
 
-<app-navbar></app-navbar>
+<div class="sidebar">
 
-<button routerLink="/books">Manage Books</button>
+<h2>LMS</h2>
+
+<a routerLink="/dashboard">Dashboard</a>
+<a routerLink="/books">Books</a>
+<a routerLink="/borrow">Borrowers</a>
+
 <button (click)="logout()">Logout</button>
+
+</div>
+
+<div class="content">
+
+<h1>Library Dashboard</h1>
+
+<p *ngIf="role==='admin'">Welcome Admin</p>
+<p *ngIf="role==='user'">Welcome User</p>
+
+</div>
+
+</div>
 

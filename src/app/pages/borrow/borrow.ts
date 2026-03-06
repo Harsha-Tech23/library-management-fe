@@ -1,43 +1,54 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
-import { NavbarComponent } from '../../layout/navbar/navbar';
 
 @Component({
-  selector: 'app-borrow',
-  standalone: true,
-  imports: [CommonModule, NavbarComponent],
-  templateUrl: './borrow.html'
+selector:'app-borrow',
+standalone:true,
+imports:[CommonModule],
+templateUrl:'./borrow.html'
 })
-export class BorrowComponent {
+export class BorrowComponent implements OnInit{
 
-  borrowedBooks: any[] = [];
+borrows:any[]=[];
 
-  constructor(private http: HttpClient) {
-    this.loadBorrowedBooks();
-  }
+constructor(private http:HttpClient){}
 
-  loadBorrowedBooks(): void {
-    this.http.get<any[]>('http://localhost:3000/borrow')
-      .subscribe({
-        next: (res) => {
-          this.borrowedBooks = res;
-        },
-        error: (err) => {
-          console.error('Borrow load error:', err);
-        }
-      });
-  }
+ngOnInit(){
 
-  returnBook(borrowId: number): void {
-    this.http.patch('http://localhost:3000/borrow/return', { borrowId })
-      .subscribe({
-        next: () => {
-          this.loadBorrowedBooks();
-        },
-        error: (err) => {
-          console.error('Return error:', err);
-        }
-      });
-  }
+this.loadBorrows();
+
+}
+
+loadBorrows(){
+
+this.http.get<any>('http://localhost:3000/borrow')
+.subscribe(res=>{
+
+console.log("BORROW RESPONSE:",res);
+
+if(Array.isArray(res)){
+this.borrows=res;
+}
+else if(res.data){
+this.borrows=res.data;
+}
+
+});
+
+}
+
+returnBook(id:number){
+
+this.http.delete('http://localhost:3000/borrow/'+id)
+.subscribe(()=>{
+
+alert("Book Returned");
+
+this.loadBorrows();
+
+});
+
+}
+
 }

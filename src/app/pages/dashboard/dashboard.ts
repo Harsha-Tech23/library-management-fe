@@ -1,26 +1,47 @@
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { AuthService } from '../../services/auth';
-import { NavbarComponent } from '../../layout/navbar/navbar';
 
 @Component({
-  selector: 'app-dashboard',
-  standalone: true,
-  imports: [CommonModule, RouterModule, NavbarComponent],  
-  template: `
-    <app-navbar></app-navbar>
-    <h2>Library Dashboard</h2>
+selector:'app-dashboard',
+standalone:true,
+imports:[CommonModule],
+template:`
 
-    <button routerLink="/books">Manage Books</button>
-    <button (click)="logout()">Logout</button>
-  `
+<div style="display:flex;height:100vh">
+
+<div style="width:200px;background:black;color:white;padding:20px">
+
+<h3>LMS</h3>
+
+<p><a href="/dashboard" style="color:white">Dashboard</a></p>
+<p><a href="/books" style="color:white">Books</a></p>
+<p><a href="/borrow" style="color:white">Borrowers</a></p>
+
+<button (click)="logout()">Logout</button>
+
+</div>
+
+<div style="flex:1;padding:40px">
+
+<h2>Library Dashboard</h2>
+
+</div>
+
+</div>
+
+`
 })
-export class DashboardComponent {
+export class DashboardComponent{
 
-  constructor(private authService: AuthService) {}
+constructor(private router:Router){}
 
-  logout() {
-    this.authService.logout();
-  }
+logout(){
+
+localStorage.clear()
+
+this.router.navigate(['/'])
+
+}
+
 }

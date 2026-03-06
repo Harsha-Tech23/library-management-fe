@@ -1,32 +1,22 @@
 import { Routes } from '@angular/router';
-import { authGuard } from './core/guards/auth-guard';
+import { DashboardComponent } from './pages/dashboard/dashboard';
+import { BooksComponent } from './pages/books/books';
+import { BorrowComponent } from './pages/borrow/borrow';
+import { LoginComponent } from './pages/login/login';
+import { roleGuard } from './core/role.guard';
 
 export const routes: Routes = [
 
-  {
-    path: 'login',
-    loadComponent: () => import('./pages/login/login').then(m => m.LoginComponent)
-  },
+  { path:'', component:LoginComponent },
+
+  { path:'dashboard', component:DashboardComponent },
+
+  { path:'books', component:BooksComponent },
 
   {
-    path: 'dashboard',
-    canActivate: [authGuard],
-    loadComponent: () => import('./pages/dashboard/dashboard').then(m => m.DashboardComponent)
-  },
-
-  {
-    path: 'books',
-    canActivate: [authGuard],
-    loadComponent: () => import('./pages/books/books').then(m => m.BooksComponent)
-  },
-
-  {
-    path: 'borrow',
-    canActivate: [authGuard],
-    loadComponent: () => import('./pages/borrow/borrow').then(m => m.BorrowComponent)
-  },
-
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
-  { path: '**', redirectTo: 'login' }
+    path:'borrow',
+    component:BorrowComponent,
+    canActivate:[roleGuard]
+  }
 
 ];

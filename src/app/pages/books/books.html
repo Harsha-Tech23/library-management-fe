@@ -1,1 +1,54 @@
-<p>books works!</p>
+<div class="container">
+
+<h2>Books</h2>
+
+<!-- ADMIN ADD BOOK -->
+
+<div *ngIf="role==='admin'">
+
+<input placeholder="Title" [(ngModel)]="newTitle">
+<input placeholder="Author" [(ngModel)]="newAuthor">
+<input placeholder="ISBN" [(ngModel)]="newIsbn">
+<input type="number" placeholder="Quantity" [(ngModel)]="newQuantity">
+
+<button (click)="addBook()">Add Book</button>
+
+</div>
+
+
+<table border="1" width="100%">
+
+<tr>
+
+<th>ID</th>
+<th>Title</th>
+<th>Author</th>
+<th>ISBN</th>
+<th>Action</th>
+
+</tr>
+
+<tr *ngFor="let book of books">
+
+<td>{{book.id}}</td>
+<td>{{book.title}}</td>
+<td>{{book.author}}</td>
+<td>{{book.isbn}}</td>
+
+<td>
+
+<button *ngIf="role==='admin'" (click)="deleteBook(book.id)">
+Delete
+</button>
+
+<button *ngIf="role==='user'" (click)="borrowBook(book)">
+Borrow
+</button>
+
+</td>
+
+</tr>
+
+</table>
+
+</div>
