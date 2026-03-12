@@ -12,23 +12,24 @@ import { FormsModule } from '@angular/forms';
 })
 export class BooksComponent implements OnInit {
 
-  books:any[]=[];
-  role='';
-  userId:any;
+  books:any[]=[]
 
-  newTitle='';
-  newAuthor='';
-  newIsbn='';
-  newQuantity=0;
+  role=''
+  userId=0
+
+  newTitle=''
+  newAuthor=''
+  newIsbn=''
+  newQuantity=0
 
   constructor(private http:HttpClient){}
 
   ngOnInit(){
 
-    this.role=(localStorage.getItem('role')||'').toLowerCase();
-    this.userId=localStorage.getItem('userId');
+    this.role=(localStorage.getItem('role')||'').toLowerCase()
+    this.userId=Number(localStorage.getItem('userId'))
 
-    this.loadBooks();
+    this.loadBooks()
 
   }
 
@@ -37,42 +38,7 @@ export class BooksComponent implements OnInit {
     this.http.get<any[]>('http://localhost:3000/books')
     .subscribe(data=>{
 
-      console.log("BOOK API RESPONSE:",data);
-
-      this.books=data;
-
-    })
-
-  }
-
-  addBook(){
-
-    const body={
-      title:this.newTitle,
-      author:this.newAuthor,
-      isbn:this.newIsbn,
-      quantity:this.newQuantity
-    }
-
-    this.http.post('http://localhost:3000/books',body)
-    .subscribe(()=>{
-
-      alert("Book Added");
-
-      this.loadBooks();
-
-    })
-
-  }
-
-  deleteBook(id:number){
-
-    this.http.delete('http://localhost:3000/books/'+id)
-    .subscribe(()=>{
-
-      alert("Book Deleted");
-
-      this.loadBooks();
+      this.books=data
 
     })
 
@@ -89,9 +55,68 @@ export class BooksComponent implements OnInit {
     }
 
     this.http.post('http://localhost:3000/borrow',body)
-    .subscribe(()=>{
+    .subscribe({
 
-      alert("Book Borrowed");
+      next:()=>{
+        alert("Book Borrowed Successfully ✅")
+        this.loadBooks()
+      },
+
+      error:(err)=>{
+        console.log(err)
+        alert("Borrow Failed ❌")
+      }
+
+    })
+
+  }
+
+  deleteBook(id:number){
+
+    this.http.delete('http://localhost:3000/books/'+id)
+    .subscribe({
+
+      next:()=>{
+        alert("Book Deleted Successfully ❌")
+        this.loadBooks()
+      },
+
+      error:(err)=>{
+        console.log(err)
+        alert("Delete Failed")
+      }
+
+    })
+
+  }
+
+  addBook(){
+
+    const body={
+      title:this.newTitle,
+      author:this.newAuthor,
+      isbn:this.newIsbn,
+      quantity:this.newQuantity
+    }
+
+    this.http.post('http://localhost:3000/books',body)
+    .subscribe({
+
+      next:()=>{
+        alert("Book Added Successfully ✅")
+
+        this.newTitle=''
+        this.newAuthor=''
+        this.newIsbn=''
+        this.newQuantity=0
+
+        this.loadBooks()
+      },
+
+      error:(err)=>{
+        console.log(err)
+        alert("Book Add Failed ❌")
+      }
 
     })
 

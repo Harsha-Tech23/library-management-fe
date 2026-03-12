@@ -1,0 +1,19 @@
+<nav class="navbar">
+
+<div class="logo">
+Library Management System
+</div>
+
+<div class="nav-links">
+
+<a routerLink="/dashboard">Dashboard</a>
+
+<a routerLink="/books">Books</a>
+
+<a *ngIf="role==='user'" routerLink="/borrow">Borrowers</a>
+
+<button (click)="logout()">Logout</button>
+
+</div>
+
+</nav>

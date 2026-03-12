@@ -1,39 +1,92 @@
 .container{
-width:80%;
+max-width:1200px;
 margin:auto;
-margin-top:40px;
+padding:30px;
 }
 
-table{
-width:100%;
-border-collapse:collapse;
-margin-top:20px;
+h2{
+font-size:28px;
+margin-bottom:20px;
 }
 
-th{
-background:#1e293b;
-color:white;
-padding:10px;
+
+
+.add-book{
+margin-bottom:20px;
+display:flex;
+gap:10px;
+flex-wrap:wrap;
 }
 
-td{
-padding:10px;
-border-bottom:1px solid #ddd;
+.add-book input{
+padding:8px;
+border:1px solid #ccc;
+border-radius:5px;
 }
 
-button{
-padding:6px 12px;
-background:#2563eb;
+.add-btn{
+background:#22c55e;
 color:white;
 border:none;
+padding:8px 18px;
+border-radius:6px;
 cursor:pointer;
 }
 
-button:hover{
-background:#1e40af;
+.add-btn:hover{
+background:#16a34a;
 }
 
-.add-form input{
-margin-right:10px;
-padding:6px;
+
+.books-table{
+width:100%;
+border-collapse:collapse;
+background:white;
+box-shadow:0 2px 8px rgba(0,0,0,0.1);
+border-radius:6px;
+overflow:hidden;
+}
+
+.books-table th{
+background:#1e293b;
+color:white;
+padding:14px;
+text-align:center;
+}
+
+.books-table td{
+padding:14px;
+text-align:center;
+border-bottom:1px solid #eee;
+}
+
+.books-table tr:hover{
+background:#f9fafb;
+}
+
+
+.borrow-btn{
+background:#2563eb;
+color:white;
+border:none;
+padding:7px 16px;
+border-radius:6px;
+cursor:pointer;
+}
+
+.borrow-btn:hover{
+background:#1d4ed8;
+}
+
+.delete-btn{
+background:#ef4444;
+color:white;
+border:none;
+padding:7px 16px;
+border-radius:6px;
+cursor:pointer;
+}
+
+.delete-btn:hover{
+background:#dc2626;
 }

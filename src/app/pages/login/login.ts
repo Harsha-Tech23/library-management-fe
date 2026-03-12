@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './login.html',
   styleUrls: ['./login.css']
 })
@@ -20,21 +20,42 @@ export class LoginComponent {
 
   login() {
 
-    this.http.post<any>('http://localhost:3000/auth/login', {
+    const body = {
       email: this.email,
       password: this.password
-    }).subscribe(res => {
+    };
 
-      const role = (res.role || '').toLowerCase();
+    this.http.post<any>('http://localhost:3000/auth/login', body)
+      .subscribe({
 
-      localStorage.setItem('role', role);
-      localStorage.setItem('userId', res.id);
+        next: (res) => {
 
-      this.router.navigate(['/dashboard']).then(() => {
-        window.location.reload();
+          if (res.userId) {
+
+            alert("Login Successful ✅");
+
+            localStorage.setItem('userId', res.userId);
+            localStorage.setItem('role', res.role);
+
+            this.router.navigate(['/dashboard']);
+
+          } else {
+
+            alert(res.message || "Login Failed ❌");
+
+          }
+
+        },
+
+        error: (err) => {
+
+          console.log(err);
+          alert("Server Error ❌");
+
+        }
+
       });
 
-    });
-
   }
+
 }

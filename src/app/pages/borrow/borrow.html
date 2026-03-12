@@ -2,11 +2,10 @@
 
 <h2>Borrowed Books</h2>
 
-<table>
+<table class="table">
 
 <tr>
 <th>Borrow ID</th>
-<th>Book ID</th>
 <th>Book Name</th>
 <th>Author</th>
 <th>ISBN</th>
@@ -16,17 +15,12 @@
 <tr *ngFor="let b of borrows">
 
 <td>{{b.id}}</td>
-<td>{{b.bookId}}</td>
 <td>{{b.bookName}}</td>
 <td>{{b.bookAuthor}}</td>
 <td>{{b.isbn}}</td>
 
 <td>
-
-<button (click)="returnBook(b.id)">
-Return
-</button>
-
+<button (click)="returnBook(b.id)">Return</button>
 </td>
 
 </tr>

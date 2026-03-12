@@ -2,9 +2,7 @@
 
 <h2>Books</h2>
 
-<!-- ADMIN ADD BOOK -->
-
-<div *ngIf="role==='admin'">
+<div *ngIf="role==='admin'" class="add-book">
 
 <input placeholder="Title" [(ngModel)]="newTitle">
 <input placeholder="Author" [(ngModel)]="newAuthor">
@@ -15,17 +13,14 @@
 
 </div>
 
-
-<table border="1" width="100%">
+<table class="table">
 
 <tr>
-
 <th>ID</th>
 <th>Title</th>
 <th>Author</th>
 <th>ISBN</th>
 <th>Action</th>
-
 </tr>
 
 <tr *ngFor="let book of books">

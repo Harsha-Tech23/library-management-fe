@@ -6,35 +6,31 @@ import { CommonModule } from '@angular/common';
 selector:'app-borrow',
 standalone:true,
 imports:[CommonModule],
-templateUrl:'./borrow.html'
+templateUrl:'./borrow.html',
+styleUrls:['./borrow.css']
 })
 export class BorrowComponent implements OnInit{
 
-borrows:any[]=[];
+borrows:any[]=[]
 
 constructor(private http:HttpClient){}
 
 ngOnInit(){
 
-this.loadBorrows();
+this.loadBorrows()
 
 }
 
 loadBorrows(){
 
-this.http.get<any>('http://localhost:3000/borrow')
-.subscribe(res=>{
+const userId=Number(localStorage.getItem('userId'))
 
-console.log("BORROW RESPONSE:",res);
+this.http.get<any[]>('http://localhost:3000/borrow/'+userId)
+.subscribe(data=>{
 
-if(Array.isArray(res)){
-this.borrows=res;
-}
-else if(res.data){
-this.borrows=res.data;
-}
+this.borrows=data
 
-});
+})
 
 }
 
@@ -43,11 +39,11 @@ returnBook(id:number){
 this.http.delete('http://localhost:3000/borrow/'+id)
 .subscribe(()=>{
 
-alert("Book Returned");
+alert("Book Returned")
 
-this.loadBorrows();
+this.loadBorrows()
 
-});
+})
 
 }
 

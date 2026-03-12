@@ -1,16 +1,75 @@
-.dashboard{
-display:flex;
-justify-content:center;
-align-items:center;
-gap:40px;
-margin-top:80px;
+.container{
+padding:25px;
+background:#f5f7fb;
+min-height:100vh;
+font-family:Arial, Helvetica, sans-serif;
 }
 
-.card{
-background:#f1f5f9;
-padding:30px;
-border-radius:10px;
-width:200px;
-text-align:center;
+
+h2{
+margin-bottom:20px;
+color:#2c3e50;
+}
+
+.menu{
+display:flex;
+gap:12px;
+margin-bottom:20px;
+}
+
+.menu button{
+background:#34495e;
+}
+
+.menu button:hover{
+background:#2c3e50;
+}
+
+.table{
+width:100%;
+border-collapse:collapse;
+background:white;
+border-radius:8px;
+overflow:hidden;
+box-shadow:0 3px 8px rgba(0,0,0,0.1);
+}
+
+
+.table th{
+background:#2c3e50;
+color:white;
+padding:12px;
+text-align:left;
+font-size:14px;
+}
+
+
+.table td{
+padding:12px;
+border-bottom:1px solid #eee;
+font-size:14px;
+}
+
+
+.table tr:hover{
+background:#f2f6ff;
+}
+
+
+.table tr:nth-child(even){
+background:#fafafa;
+}
+
+
+@media(max-width:768px){
+
+.menu{
+flex-wrap:wrap;
+}
+
+.table{
+font-size:12px;
+}
+
 }
 

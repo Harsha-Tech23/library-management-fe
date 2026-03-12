@@ -1,50 +1,59 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-reset-password',
-  standalone: true,
-  imports: [CommonModule, FormsModule],
-  templateUrl: './reset-password.html'
+selector:'app-reset-password',
+standalone:true,
+imports:[CommonModule,FormsModule],
+templateUrl:'./reset-password.html',
+styleUrls:['./reset-password.css']
 })
-export class ResetPasswordComponent {
+export class ResetPasswordComponent{
 
-  oldPassword='';
-  newPassword='';
-  confirmPassword='';
+email='';
+newPassword='';
+confirmPassword='';
 
-  userId:any;
+constructor(private http:HttpClient){}
 
-  constructor(
-    private http:HttpClient,
-    private router:Router
-  ){
+resetPassword(){
 
-    this.userId = localStorage.getItem('userId');
+if(this.newPassword !== this.confirmPassword){
 
-  }
+alert("Passwords do not match");
+return;
 
-  resetPassword(){
+}
 
-    const body={
-      newPassword:this.newPassword
-    }
+const body={
+email:this.email,
+newPassword:this.newPassword
+};
 
-    this.http.patch(
-      'http://localhost:3000/users/reset-password/'+this.userId,
-      body
-    )
-    .subscribe(()=>{
+this.http.post('http://localhost:3000/auth/reset-password',body)
+.subscribe({
 
-      alert("Password updated");
+next:()=>{
 
-      this.router.navigate(['/login']);
+alert("Password reset successful");
 
-    });
+this.email='';
+this.newPassword='';
+this.confirmPassword='';
 
-  }
+},
+
+error:(err)=>{
+
+console.error(err);
+alert("Reset password failed");
+
+}
+
+});
+
+}
 
 }
